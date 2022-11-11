@@ -1,0 +1,8 @@
+*.[oa]
+*~
+SSH*
+*.csv
+*.log
+*.pyc
+.ssh/
+.vscode/
