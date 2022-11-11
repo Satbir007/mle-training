@@ -1,3 +1,4 @@
+
 import os
 import tarfile
 
@@ -16,6 +17,7 @@ from sklearn.model_selection import (
     train_test_split,
 )
 from sklearn.tree import DecisionTreeRegressor
+
 
 DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
 HOUSING_PATH = os.path.join(DOWNLOAD_ROOT, "datasets/housing/")
@@ -40,6 +42,7 @@ housing = load_housing_data()
 
 
 train_set, test_set = train_test_split(housing, test_size=0.2, random_state=42)
+
 
 housing["income_cat"] = pd.cut(
     housing["median_income"],
@@ -113,8 +116,13 @@ housing_tr["population_per_household"] = (
 )
 
 housing_cat = housing[["ocean_proximity"]]
+
 t4 = housing_cat
 housing_prepared = housing_tr.join(pd.get_dummies(t4, drop_first=True))
+
+t3 = housing_cat
+housing_prepared = housing_tr.join(pd.get_dummies(t3, drop_first=True))
+
 
 
 lin_reg = LinearRegression()
@@ -208,8 +216,13 @@ X_test_prepared["population_per_household"] = (
 )
 
 X_test_cat = X_test[["ocean_proximity"]]
+
 t5 = X_test_cat
 X_test_prepared = X_test_prepared.join(pd.get_dummies(t5, drop_first=True))
+
+t4 = X_test_cat
+X_test_prepared = X_test_prepared.join(pd.get_dummies(t4, drop_first=True))
+
 
 
 final_predictions = final_model.predict(X_test_prepared)
