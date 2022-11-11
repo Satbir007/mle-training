@@ -1,19 +1,23 @@
-import numpy as np
+
 import os
-import pandas as pd
 import tarfile
-from six.moves import urllib
+
+import numpy as np
+import pandas as pd
 from scipy.stats import randint
+from six.moves import urllib
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import RandomizedSearchCV
-from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-from sklearn.model_selection import train_test_split
-from sklearn.model_selection import StratifiedShuffleSplit
 from sklearn.impute import SimpleImputer
-from sklearn.metrics import mean_absolute_error
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.model_selection import (
+    GridSearchCV,
+    RandomizedSearchCV,
+    StratifiedShuffleSplit,
+    train_test_split,
+)
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.model_selection import GridSearchCV
+
 
 DOWNLOAD_ROOT = "https://raw.githubusercontent.com/ageron/handson-ml/master/"
 HOUSING_PATH = os.path.join(DOWNLOAD_ROOT, "datasets/housing/")
@@ -112,8 +116,13 @@ housing_tr["population_per_household"] = (
 )
 
 housing_cat = housing[["ocean_proximity"]]
+
+t4 = housing_cat
+housing_prepared = housing_tr.join(pd.get_dummies(t4, drop_first=True))
+
 t3 = housing_cat
 housing_prepared = housing_tr.join(pd.get_dummies(t3, drop_first=True))
+
 
 
 lin_reg = LinearRegression()
@@ -207,8 +216,13 @@ X_test_prepared["population_per_household"] = (
 )
 
 X_test_cat = X_test[["ocean_proximity"]]
+
+t5 = X_test_cat
+X_test_prepared = X_test_prepared.join(pd.get_dummies(t5, drop_first=True))
+
 t4 = X_test_cat
 X_test_prepared = X_test_prepared.join(pd.get_dummies(t4, drop_first=True))
+
 
 
 final_predictions = final_model.predict(X_test_prepared)
