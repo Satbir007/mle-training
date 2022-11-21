@@ -5,4 +5,4 @@ SSH*
 *.log
 *.pyc
 .ssh/
-.vscode/
+
